@@ -4,6 +4,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./utils/db.js";
 import userRouter from "./routes/userRoute.js";
+import companyRouter from "./routes/companyRoute.js";
+import jobRouter from "./routes/jobRoute.js";
 
 dotenv.config({});
 
@@ -22,6 +24,8 @@ connectDB();
 // };
 // app.use(cors(corsOption));
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/company", companyRouter);
+app.use("/api/v1/job", jobRouter);
 
 app.use(cors());
 app.get("/", (req, res) => {
