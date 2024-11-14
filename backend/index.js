@@ -6,6 +6,7 @@ import connectDB from "./utils/db.js";
 import userRouter from "./routes/userRoute.js";
 import companyRouter from "./routes/companyRoute.js";
 import jobRouter from "./routes/jobRoute.js";
+import applicationRouter from "./routes/applicationRoutes.js";
 
 dotenv.config({});
 
@@ -26,6 +27,7 @@ connectDB();
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/company", companyRouter);
 app.use("/api/v1/job", jobRouter);
+app.use("/api/v1/application", applicationRouter);
 
 app.use(cors());
 app.get("/", (req, res) => {
