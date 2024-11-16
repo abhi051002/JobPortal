@@ -4,17 +4,29 @@ import jwt from "jsonwebtoken";
 
 const register = async (req, res) => {
   try {
-    const { fullname, email, phoneNumber, password, role } = req.body;
-    if (!fullname || !email || !phoneNumber || !password || !role) {
-      return res
-        .status(400)
-        .json({ message: "Some fields are missing", succeess: false });
+    const { fullname, email, phoneNumber, password, confirmPassword, role } =
+      req.body;
+    if (
+      !fullname ||
+      !email ||
+      !phoneNumber ||
+      !password ||
+      !role ||
+      !confirmPassword
+    ) {
+      return res.json({ message: "Some fields are missing", success: false });
+    }
+    if (password !== confirmPassword) {
+      return res.json({
+        message: "Passwords do not match",
+        success: false,
+      });
     }
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({
+      return res.json({
         message: "User already exist with this email",
-        succeess: false,
+        success: false,
       });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -25,9 +37,7 @@ const register = async (req, res) => {
       password: hashedPassword,
       role,
     });
-    res
-      .status(201)
-      .json({ message: "User Registered Successfully", succeess: true });
+    res.json({ message: "User Registered Successfully", success: true });
   } catch (error) {
     console.error(error);
     res.json({ success: false, message: error.message });
@@ -38,28 +48,22 @@ const login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
     if (!email || !password || !role) {
-      return res
-        .status(400)
-        .json({ message: "Some fields are missing", succeess: false });
+      return res.json({ message: "Some fields are missing", success: false });
     }
     let user = await userModel.findOne({ email: email });
     if (!user) {
-      return res
-        .status(404)
-        .json({ message: "User not found", succeess: false });
+      return res.json({ message: "User not found", success: false });
     }
     const isPasswordMatched = await bcrypt.compare(password, user.password);
     if (!isPasswordMatched) {
-      return res
-        .status(404)
-        .json({ message: "Invalid Password", succeess: false });
+      return res.json({ message: "Invalid Password", success: false });
     }
 
     //  Check for the role correct or not
     if (role !== user.role) {
-      return res.status(404).json({
+      return res.json({
         message: "Account doesn't exist with current role",
-        succeess: false,
+        success: false,
       });
     }
     const tokenData = {
@@ -80,7 +84,6 @@ const login = async (req, res) => {
     };
 
     return res
-      .status(200)
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
         httpsOnly: true,
@@ -89,7 +92,7 @@ const login = async (req, res) => {
       .json({
         message: `Welecome back ${user.fullname}`,
         success: true,
-        user
+        user,
       });
   } catch (error) {
     console.error(error);
@@ -100,7 +103,6 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
   try {
     return res
-      .status(200)
       .cookie("token", "", { maxAge: 0 })
       .json({ message: `Logout Successfully`, success: true });
   } catch (error) {
@@ -133,9 +135,7 @@ const updateProfile = async (req, res) => {
       role: user.role,
       profile: user.profile,
     };
-    res
-      .status(200)
-      .json({ message: "Profile updated successfully", success: true, user });
+    res.json({ message: "Profile updated successfully", success: true, user });
   } catch (error) {
     console.error(error);
     res.json({ success: false, message: error.message });

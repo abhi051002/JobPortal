@@ -28,9 +28,7 @@ const postJob = async (req, res) => {
       !position ||
       !companyId
     ) {
-      return res
-        .status(400)
-        .json({ message: "Something is Missing", success: false });
+      return res.json({ message: "Something is Missing", success: false });
     }
     const job = await jobModel.create({
       title,
@@ -45,9 +43,7 @@ const postJob = async (req, res) => {
       created_by: userId,
     });
 
-    res
-      .status(201)
-      .json({ message: "Job posted successfully", success: true, job });
+    res.json({ message: "Job posted successfully", success: true, job });
   } catch (error) {
     console.error(error);
   }
@@ -68,9 +64,9 @@ const getAllJob = async (req, res) => {
       .populate({ path: "company" })
       .sort({ createdAt: -1 });
     if (!jobs) {
-      return res.status(404).json({ message: "No jobs found", success: false });
+      return res.json({ message: "No jobs found", success: false });
     }
-    res.status(200).json({ success: true, jobs });
+    res.json({ success: true, jobs });
   } catch (error) {
     console.error(error);
   }
@@ -82,9 +78,9 @@ const getJobById = async (req, res) => {
     const jobId = req.params.id;
     const job = await jobModel.findById(jobId);
     if (!job) {
-      return res.status(404).json({ message: "Job not found", success: false });
+      return res.json({ message: "Job not found", success: false });
     }
-    res.status(200).json({ success: true, job });
+    res.json({ success: true, job });
   } catch (error) {
     console.error(error);
   }
@@ -99,9 +95,9 @@ const getAdminJobs = async (req, res) => {
       .populate({ path: "created_by" })
       .sort({ createdAt: -1 });
     if (!jobs) {
-      return res.status(404).json({ message: "No jobs found", success: false });
+      return res.json({ message: "No jobs found", success: false });
     }
-    res.status(200).json({ success: true, jobs });
+    res.json({ success: true, jobs });
   } catch (error) {
     console.error(error);
   }

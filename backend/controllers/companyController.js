@@ -4,15 +4,12 @@ const registerCompany = async (req, res) => {
   try {
     const { companyName } = req.body;
     if (!companyName) {
-      return res
-        .status(400)
-        .json({ message: "Company name is required", success: false });
+      return res.json({ message: "Company name is required", success: false });
     }
 
     let company = await companyModel.findOne({ name: companyName });
     if (company) {
       return res
-        .status(200)
         .json({ message: "Company already exist", success: false });
     }
     company = await companyModel.create({
@@ -21,7 +18,6 @@ const registerCompany = async (req, res) => {
     });
 
     return res
-      .status(201)
       .json({ message: "Company registered successfully", success: true });
   } catch (error) {
     console.error(error);
@@ -34,7 +30,6 @@ const getCompany = async (req, res) => {
     const companies = await companyModel.find({ userId });
     if (!companies) {
       return res
-        .status(404)
         .json({ message: "No companies found", success: false });
     }
     res.json({ success: true, companies });
@@ -49,7 +44,6 @@ const getCompanyById = async (req, res) => {
     const company = await companyModel.findById(companyId);
     if (!company) {
       return res
-        .status(404)
         .json({ message: "Company not found", success: false });
     }
     res.json({ success: true, company });
@@ -73,7 +67,6 @@ const updateCompany = async (req, res) => {
 
     if (!company) {
       return res
-        .status(404)
         .json({ message: "Company not found", success: false });
     }
     res.json({

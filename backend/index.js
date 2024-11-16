@@ -19,17 +19,17 @@ app.use(cookieParser());
 connectDB();
 
 // For allowing a single route
-// const corsOption = {
-//   origin: "http://localhost:5173",
-//   credentials: true,
-// };
-// app.use(cors(corsOption));
+const corsOption = {
+  origin: "http://localhost:5173",
+  credentials: true,
+};
+app.use(cors(corsOption));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/company", companyRouter);
 app.use("/api/v1/job", jobRouter);
 app.use("/api/v1/application", applicationRouter);
 
-app.use(cors());
+// app.use(cors());
 app.get("/", (req, res) => {
   res.status(200).send("Job Portal API is Working");
 });
