@@ -7,8 +7,9 @@ import { RadioGroup } from "../ui/radio-group";
 import { toast } from "sonner";
 import axios from "axios";
 import { USER_API_ENDPOINT } from "@/constant";
-// Import icons (assuming you're using some icon library like react-icons)
-import { Eye, EyeOff } from "lucide-react"; // You can install lucide-react or use any other icon library
+import { Eye, EyeOff, Loader2 } from "lucide-react"; // You can install lucide-react or use any other icon library
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/redux/authSlice";
 
 const Login = () => {
   const [input, setInputData] = useState({
@@ -16,9 +17,10 @@ const Login = () => {
     password: "",
     role: "",
   });
+  const { loading } = useSelector((store) => store.auth);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const changeEventHandler = (e) => {
     setInputData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -30,18 +32,21 @@ const Login = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
+      dispatch(setLoading(true));
       const response = await axios.post(`${USER_API_ENDPOINT}/login`, input, {
         headers: { "Content-Type": "application/json" },
       });
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/home");
+        navigate("/");
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       console.error(error);
       toast.error(error.message);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 
@@ -115,9 +120,16 @@ const Login = () => {
             </div>
           </RadioGroup>
         </div>
-        <Button type="submit" className="w-full my-4">
-          Login
-        </Button>
+        {loading ? (
+          <Button className="w-full my-4">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
+          </Button>
+        ) : (
+          <Button type="submit" className="w-full my-4">
+            Login
+          </Button>
+        )}
+
         <span className="text-sm">
           Don't have an Account?{" "}
           <Link to={"/signup"} className="text-blue-600">
