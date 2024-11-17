@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import Home from "./components/Home";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+      <Footer />
     </>
   );
 };
