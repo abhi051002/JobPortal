@@ -39,6 +39,7 @@ const Login = () => {
       if (response.data.success) {
         dispatch(setUser(response.data.user));
         toast.success(response.data.message);
+        localStorage.setItem("token", response.data.token);
         navigate("/");
       } else {
         toast.error(response.data.message);

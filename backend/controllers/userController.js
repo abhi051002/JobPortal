@@ -1,6 +1,8 @@
 import userModel from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import getDataUri from "../utils/dataUri.js";
+import cloudinary from "../utils/cloudinary.js";
 
 const register = async (req, res) => {
   try {
@@ -86,12 +88,14 @@ const login = async (req, res) => {
     return res
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
-        httpsOnly: true,
-        sameSite: "strict",
+        httpOnly: true,
+        sameSite: "none",
+        secure: false,
       })
       .json({
         message: `Welecome back ${user.fullname}`,
         success: true,
+        token: token,
         user,
       });
   } catch (error) {
@@ -115,6 +119,12 @@ const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+      public_id: file.originalname,
+    });
+    const imageUrl = cloudResponse.secure_url;
+
     let skillsArray;
     skills && (skillsArray = skills.split(","));
     const userId = req.id; // From middleware authentication
@@ -125,6 +135,11 @@ const updateProfile = async (req, res) => {
     phoneNumber && (user.phoneNumber = phoneNumber);
     bio && (user.profile.bio = bio);
     skillsArray && (user.profile.skills = skillsArray);
+
+    if (imageUrl) {
+      user.profile.resume = imageUrl;
+      user.profile.resumeOriginalName = file.originalname;
+    }
     user.save();
 
     user = {
