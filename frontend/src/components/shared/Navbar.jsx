@@ -59,19 +59,31 @@ function Navbar() {
             <Popover>
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage
+                    src={
+                      user?.profile?.profilePhoto
+                        ? user?.profile?.profilePhoto
+                        : "https://github.com/shadcn.png"
+                    }
+                  />
                 </Avatar>
               </PopoverTrigger>
               <PopoverContent className="w-80">
                 <div>
                   <div className="flex gap-4 space-y-2">
                     <Avatar>
-                      <AvatarImage src="https://github.com/shadcn.png" />
+                      <AvatarImage
+                        src={
+                          user?.profile?.profilePhoto
+                            ? user?.profile?.profilePhoto
+                            : "https://github.com/shadcn.png"
+                        }
+                      />
                     </Avatar>
                     <div>
-                      <h4 className="font-medium">{user.fullname}</h4>
+                      <h4 className="font-medium">{user?.fullname}</h4>
                       <p className="text-sm text-muted-foreground">
-                        Lorem ipsum dolor sit amet.
+                        {user?.profile?.bio}
                       </p>
                     </div>
                   </div>

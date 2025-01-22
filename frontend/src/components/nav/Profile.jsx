@@ -19,7 +19,11 @@ const Profile = () => {
         <div className="flex items-center gap-4">
           <Avatar>
             <AvatarImage
-              src="https://static.vecteezy.com/system/resources/previews/008/214/517/non_2x/abstract-geometric-logo-or-infinity-line-logo-for-your-company-free-vector.jpg"
+              src={
+                user?.profile?.profilePhoto
+                  ? user?.profile?.profilePhoto
+                  : "https://static.vecteezy.com/system/resources/previews/008/214/517/non_2x/abstract-geometric-logo-or-infinity-line-logo-for-your-company-free-vector.jpg"
+              }
               alt="Profile"
               className="w-24 h-24"
             />

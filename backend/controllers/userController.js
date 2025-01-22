@@ -24,6 +24,10 @@ const register = async (req, res) => {
         success: false,
       });
     }
+    const file = req.file;
+    const fileUri = getDataUri(file);
+    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
       return res.json({
@@ -38,6 +42,9 @@ const register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
+      profile: {
+        profilePhoto: cloudResponse.secure_url,
+      },
     });
     res.json({ message: "User Registered Successfully", success: true });
   } catch (error) {
@@ -119,11 +126,14 @@ const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-      public_id: file.originalname,
-    });
-    const imageUrl = cloudResponse.secure_url;
+    let imageUrl;
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+        public_id: file.originalname,
+      });
+      imageUrl = cloudResponse.secure_url;
+    }
 
     let skillsArray;
     skills && (skillsArray = skills.split(","));
