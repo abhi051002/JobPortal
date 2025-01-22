@@ -27,6 +27,7 @@ function Navbar() {
         dispatch(setUser(null));
         navigate("/");
         toast.success(res.data.message);
+        localStorage.removeItem("token");
       }
     } catch (error) {
       console.log(error);

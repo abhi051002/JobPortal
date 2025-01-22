@@ -91,7 +91,6 @@ const login = async (req, res) => {
       role: user.role,
       profile: user.profile,
     };
-
     return res
       .cookie("token", token, {
         maxAge: 1 * 24 * 60 * 60 * 1000,
@@ -102,8 +101,8 @@ const login = async (req, res) => {
       .json({
         message: `Welecome back ${user.fullname}`,
         success: true,
-        token: token,
         user,
+        token,
       });
   } catch (error) {
     console.error(error);
