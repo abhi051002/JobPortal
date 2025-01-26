@@ -1,16 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { useParams } from "react-router-dom";
-import useGetSingleJob from "@/hooks/useGetSingleJob";
-import { useSelector } from "react-redux";
+import axios from "axios";
+import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from "@/constant";
+import { useDispatch, useSelector } from "react-redux";
+import { setSingleJob } from "@/redux/jobSlice";
+import { toast } from "sonner";
 
 const JobDescription = () => {
-  const isApplied = false;
+  const dispatch = useDispatch();
   const params = useParams();
+  const { user } = useSelector((store) => store.auth);
+  const { singleJob } = useSelector((store) => store.job);
   const jobId = params.id;
-  useGetSingleJob(jobId);
-  const { singleJob } = useSelector((state) => state.job);
+  const token = localStorage.getItem("token");
+  const isInitiallyApplied = user
+    ? singleJob?.applications?.some(
+        (application) => application.applicant === user?._id
+      ) || false
+    : false;
+  const [isApplied, setIsApplied] = useState(isInitiallyApplied);
+
+  useEffect(() => {
+    const fetchSingleJob = async () => {
+      const res = await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}`, {
+        withCredentials: true,
+        headers: { token },
+      });
+      if (res.data.success) {
+        dispatch(setSingleJob(res.data.job));
+        setIsApplied(
+          res.data.job.applications.some(
+            (application) => application.applicant === user?._id
+          )
+        );
+      } else {
+        console.error(res.data);
+      }
+    };
+    fetchSingleJob();
+  }, [jobId, dispatch, user?._id]);
   const dateFormatter = (date) => {
     const adjustedDate = new Date(date);
 
@@ -20,6 +50,33 @@ const JobDescription = () => {
 
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
+  };
+
+  const applyJob = async () => {
+    try {
+      if (!user) {
+        toast.error("Please login to apply for a job");
+        return;
+      }
+      const response = await axios.get(
+        `${APPLICATION_API_ENDPOINT}/apply/${jobId}`,
+        { withCredentials: true, headers: { token } }
+      );
+      if (response.data.success) {
+        setIsApplied(true);
+        const updateSingleJobs = {
+          ...singleJob,
+          applications: [...singleJob.applications, { applicant: user?._id }],
+        };
+        dispatch(setSingleJob(updateSingleJobs));
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message);
+    }
   };
   return (
     <div className="max-w-7xl mx-auto my-10">
@@ -45,6 +102,7 @@ const JobDescription = () => {
               ? "bg-gray-600 cursor-not-allowed"
               : "bg-[#7209b7] hover:bg-[#5f32ad]"
           }`}
+          onClick={isApplied ? null : applyJob}
         >
           {isApplied ? "Already Applied!" : "Apply Now"}
         </Button>

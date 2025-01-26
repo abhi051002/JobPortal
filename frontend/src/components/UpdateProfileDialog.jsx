@@ -69,11 +69,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       if (response.data.success) {
         setLoading(false);
         dispatch(setUser(response.data.user));
-        console.log(response.data.user);
         toast.success(response.data.message);
       } else {
         setLoading(false);
-        console.log(response.data.message);
+        console.error(response.data.message);
         toast.error(response.data.message);
       }
     } catch (error) {

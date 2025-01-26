@@ -22,7 +22,9 @@ const Job = ({ job }) => {
     <div className="border border-gray-200 shadow-xl bg-white rounded-md p-5">
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-500">
-          {dateFormat(job.createdAt)} days ago
+          {dateFormat(job?.createdAt) === 0
+            ? "Today"
+            : dateFormat(job?.createdAt) + " days ago"}
         </p>
         <Button variant="outline" className="rounded-full" size="icon">
           <Bookmark />
@@ -40,24 +42,24 @@ const Job = ({ job }) => {
         </div>
       </div>
       <div>
-        <h1 className="font-bold text-lg my-2">{job.title}</h1>
-        <p className="text-sm text-gray-600">{job.description}</p>
+        <h1 className="font-bold text-lg my-2">{job?.title}</h1>
+        <p className="text-sm text-gray-600">{job?.description}</p>
       </div>
       <div className="flex items-center gap-2 mt-4">
         <Badge className={"text-blue-700 font-bold"} variant="ghost">
-          {job.position} Positions
+          {job?.position} Positions
         </Badge>
         <Badge className={"text-[#F83B02] font-bold"} variant="ghost">
-          {job.jobType}
+          {job?.jobType}
         </Badge>
         <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
-          {job.salary} LPA
+          {job?.salary} LPA
         </Badge>
       </div>
       <div className="flex items-center gap-4 mt-4">
         <Button
           variant="outline"
-          onClick={() => navigate(`/description/${job._id}`)}
+          onClick={() => navigate(`/description/${job?._id}`)}
         >
           Details
         </Button>
