@@ -7,6 +7,7 @@ import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from "@/constant";
 import { useDispatch, useSelector } from "react-redux";
 import { setSingleJob } from "@/redux/jobSlice";
 import { toast } from "sonner";
+import { CircleCheckBig } from "lucide-react";
 
 const JobDescription = () => {
   const dispatch = useDispatch();
@@ -15,11 +16,10 @@ const JobDescription = () => {
   const { singleJob } = useSelector((store) => store.job);
   const jobId = params.id;
   const token = localStorage.getItem("token");
-  const isInitiallyApplied = user
-    ? singleJob?.applications?.some(
-        (application) => application.applicant === user?._id
-      ) || false
-    : false;
+  const isInitiallyApplied =
+    singleJob?.applications?.some(
+      (application) => application.applicant === user?.id
+    ) || false;
   const [isApplied, setIsApplied] = useState(isInitiallyApplied);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const JobDescription = () => {
         dispatch(setSingleJob(res.data.job));
         setIsApplied(
           res.data.job.applications.some(
-            (application) => application.applicant === user?._id
+            (application) => application.applicant === user?.id
           )
         );
       } else {
@@ -99,11 +99,12 @@ const JobDescription = () => {
           disabled={isApplied}
           className={`rounded-lg ${
             isApplied
-              ? "bg-gray-600 cursor-not-allowed"
+              ? "bg-green-600 text-white cursor-not-allowed"
               : "bg-[#7209b7] hover:bg-[#5f32ad]"
           }`}
           onClick={isApplied ? null : applyJob}
         >
+          {isApplied ? <CircleCheckBig /> : <></>}
           {isApplied ? "Already Applied!" : "Apply Now"}
         </Button>
       </div>
@@ -144,7 +145,9 @@ const JobDescription = () => {
         <h1 className="font-bold my-1">
           Total Applicants :{" "}
           <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.applications?.length === 0 ? 0 : singleJob?.applications?.length}
+            {singleJob?.applications?.length === 0
+              ? 0
+              : singleJob?.applications?.length}
           </span>
         </h1>
         <h1 className="font-bold my-1">

@@ -46,15 +46,28 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-12">
           <ul className="flex font-medium items-center gap-4">
-            <li>
-              <Link to={"/"}>Home</Link>
-            </li>
-            <li>
-              <Link to={"/jobs"}>Jobs</Link>
-            </li>
-            <li>
-              <Link to={"/browse"}>Browse</Link>
-            </li>
+            {user && user?.role === "recruiters" ? (
+              <>
+                <li>
+                  <Link to={"/admin/companies"}>Companies</Link>
+                </li>
+                <li>
+                  <Link to={"/admin/jobs"}>Jobs</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <Link to={"/"}>Home</Link>
+                </li>
+                <li>
+                  <Link to={"/jobs"}>Jobs</Link>
+                </li>
+                <li>
+                  <Link to={"/browse"}>Browse</Link>
+                </li>
+              </>
+            )}
           </ul>
           {user ? (
             <Popover>
@@ -90,10 +103,14 @@ function Navbar() {
                   </div>
                   <div className="flex flex-col my-3 text-gray-600">
                     <div className="flex w-fit items-center gap-2 cursor-pointer">
-                      <User2 />
-                      <Button variant="link">
-                        <Link to={"/profile"}>View Profile</Link>
-                      </Button>
+                      {user && user.role === "student" && (
+                        <>
+                          <User2 />
+                          <Button variant="link">
+                            <Link to={"/profile"}>View Profile</Link>
+                          </Button>
+                        </>
+                      )}
                     </div>
                     <div className="flex w-fit items-center gap-2 cursor-pointer">
                       <LogOut />

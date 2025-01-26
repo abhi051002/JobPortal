@@ -9,16 +9,18 @@ const registerCompany = async (req, res) => {
 
     let company = await companyModel.findOne({ name: companyName });
     if (company) {
-      return res
-        .json({ message: "Company already exist", success: false });
+      return res.json({ message: "Company already exist", success: false });
     }
     company = await companyModel.create({
       name: companyName,
       userId: req.id,
     });
 
-    return res
-      .json({ message: "Company registered successfully", success: true });
+    return res.json({
+      message: "Company registered successfully",
+      success: true,
+      company,
+    });
   } catch (error) {
     console.error(error);
   }
@@ -29,8 +31,7 @@ const getCompany = async (req, res) => {
     const userId = req.id;
     const companies = await companyModel.find({ userId });
     if (!companies) {
-      return res
-        .json({ message: "No companies found", success: false });
+      return res.json({ message: "No companies found", success: false });
     }
     res.json({ success: true, companies });
   } catch (error) {
@@ -43,8 +44,7 @@ const getCompanyById = async (req, res) => {
     const companyId = req.params.id;
     const company = await companyModel.findById(companyId);
     if (!company) {
-      return res
-        .json({ message: "Company not found", success: false });
+      return res.json({ message: "Company not found", success: false });
     }
     res.json({ success: true, company });
   } catch (error) {
@@ -66,8 +66,7 @@ const updateCompany = async (req, res) => {
     );
 
     if (!company) {
-      return res
-        .json({ message: "Company not found", success: false });
+      return res.json({ message: "Company not found", success: false });
     }
     res.json({
       success: true,
