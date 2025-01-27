@@ -8,11 +8,13 @@ import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Label } from "../ui/label";
 import { toast } from "sonner";
+import useGetCompanyById from "@/hooks/useGetCompanyById";
 
 const CompanySetup = () => {
+  const { id } = useParams();
+  useGetCompanyById(id);
   const { singleCompany } = useSelector((store) => store.company);
   const [loading, setLoading] = useState(false);
-  const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -43,7 +45,6 @@ const CompanySetup = () => {
       formData.append("file", input.file);
     }
     try {
-      console.log(formData);
       const res = await axios.put(
         `${COMPANY_API_ENDPOINT}/update/${id}`,
         formData,
@@ -71,19 +72,31 @@ const CompanySetup = () => {
       setLoading(false);
     }
   };
+  useEffect(() => {
+    if (singleCompany) {
+      setInput({
+        name: singleCompany.name || "",
+        description: singleCompany.description || "",
+        website: singleCompany.website || "",
+        location: singleCompany.location || "",
+        file: singleCompany.logo || null,
+      });
+    }
+  }, [singleCompany]);
   return (
     <div className="max-w-xl mx-auto my-10">
+      <div className="flex items-center gap-5 p-8">
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 text-gray-500 font-semibold"
+          onClick={() => navigate(`/admin/companies`)}
+        >
+          <ArrowLeft />
+          <span>Back</span>
+        </Button>
+        <h1 className="font-bold text-xl">Company Setup</h1>
+      </div>
       <form onSubmit={submitHandler}>
-        <div className="flex items-center gap-5 p-8">
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 text-gray-500 font-semibold"
-          >
-            <ArrowLeft />
-            <span>Back</span>
-          </Button>
-          <h1 className="font-bold text-xl">Company Setup</h1>
-        </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <Label>Company Name</Label>
