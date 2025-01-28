@@ -12,8 +12,31 @@ import JobDescription from "./components/JobDescription";
 import Companies from "./components/Admin/Companies";
 import CreateCompanies from "./components/Admin/CreateCompanies";
 import CompanySetup from "./components/Admin/CompanySetup";
+import Job from "./components/Admin/Job";
+import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { setUser } from "./redux/authSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const isTokenExpired = (token) => {
+    try {
+      const decoded = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decoded.exp < currentTime;
+    } catch (error) {
+      console.error("Invalid token:", error);
+      return true;
+    }
+  };
+  const token = localStorage.getItem("token");
+  if (token && isTokenExpired(token)) {
+    console.log("Token is expired");
+    dispatch(setUser(null));
+    localStorage.removeItem("token");
+  } else {
+    console.log("Token is valid");
+  }
   return (
     <>
       <Navbar />
@@ -30,6 +53,7 @@ const App = () => {
         <Route path="/admin/companies" element={<Companies />} />
         <Route path="/admin/companies/create" element={<CreateCompanies />} />
         <Route path="/admin/companies/:id" element={<CompanySetup />} />
+        <Route path="/admin/job" element={<Job />} />
       </Routes>
       <Footer />
     </>
