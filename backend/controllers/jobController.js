@@ -94,7 +94,7 @@ const getAdminJobs = async (req, res) => {
     const adminId = req.id;
     const jobs = await jobModel
       .find({ created_by: adminId })
-      .populate({ path: "created_by" })
+      .populate({ path: "company" })
       .sort({ createdAt: -1 });
     if (!jobs) {
       return res.json({ message: "No jobs found", success: false });

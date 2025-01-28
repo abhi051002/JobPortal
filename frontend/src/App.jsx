@@ -53,7 +53,7 @@ const App = () => {
         <Route path="/admin/companies" element={<Companies />} />
         <Route path="/admin/companies/create" element={<CreateCompanies />} />
         <Route path="/admin/companies/:id" element={<CompanySetup />} />
-        <Route path="/admin/job" element={<Job />} />
+        <Route path="/admin/jobs" element={<Job />} />
       </Routes>
       <Footer />
     </>
