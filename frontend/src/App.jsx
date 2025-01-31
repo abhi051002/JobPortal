@@ -16,6 +16,7 @@ import Job from "./components/Admin/Job";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { setUser } from "./redux/authSlice";
+import PostJob from "./components/Admin/PostJob";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -54,6 +55,7 @@ const App = () => {
         <Route path="/admin/companies/create" element={<CreateCompanies />} />
         <Route path="/admin/companies/:id" element={<CompanySetup />} />
         <Route path="/admin/jobs" element={<Job />} />
+        <Route path="/admin/jobs/create" element={<PostJob />} />
       </Routes>
       <Footer />
     </>

@@ -21,10 +21,10 @@ const Job = () => {
       <div className="flex items-center justify-between my-5">
         <Input
           className="w-fit"
-          placeholder="Filter By Name"
+          placeholder="Search by Company Name & Role"
           onChange={(e) => setInput(e.target.value)}
         />
-        <Button onClick={() => navigate("/admin/companies/create")}>
+        <Button onClick={() => navigate("create")}>
           <Plus />
           Post New Job
         </Button>

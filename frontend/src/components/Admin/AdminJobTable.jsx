@@ -25,7 +25,12 @@ const AdminJobTable = () => {
         if (!searchJobByText) {
           return true;
         }
-        return job?.name?.toLowerCase().includes(searchJobByText.toLowerCase());
+        return (
+          job?.title?.toLowerCase().includes(searchJobByText.toLowerCase()) ||
+          job?.company?.name
+            ?.toLowerCase()
+            .includes(searchJobByText.toLowerCase())
+        );
       });
     setFilterJobs(filteredJob);
   }, [allAdminJobs, searchJobByText]);
@@ -77,7 +82,11 @@ const AdminJobTable = () => {
               </TableRow>
             ))
           ) : (
-            <span>No Companies Registered yet..</span>
+            <TableRow className="text-center">
+              <TableCell colSpan="4" className="font-bold text-lg">
+                No Job Posted yet by you.
+              </TableCell>
+            </TableRow>
           )}
         </TableBody>
       </Table>

@@ -33,7 +33,7 @@ const Job = ({ job }) => {
       <div className="flex items-center gap-2 my-2">
         <Button variant="outline" className="rounded-full" size="icon">
           <Avatar>
-            <AvatarImage src="https://static.vecteezy.com/system/resources/previews/008/214/517/non_2x/abstract-geometric-logo-or-infinity-line-logo-for-your-company-free-vector.jpg" />
+            <AvatarImage src={job?.company?.logo} />
           </Avatar>
         </Button>
         <div>

@@ -21,10 +21,10 @@ const Companies = () => {
       <div className="flex items-center justify-between my-5">
         <Input
           className="w-fit"
-          placeholder="Filter By Name"
+          placeholder="Search By Name"
           onChange={(e) => setInput(e.target.value)}
         />
-        <Button onClick={() => navigate("/admin/companies/create")}>
+        <Button onClick={() => navigate("create")}>
           <Plus />
           New Company
         </Button>
