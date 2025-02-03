@@ -24,9 +24,11 @@ const register = async (req, res) => {
         success: false,
       });
     }
-    const file = req.file;
-    const fileUri = getDataUri(file);
-    const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    if (req.file) {
+      const file = req.file;
+      const fileUri = getDataUri(file);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+    }
 
     const existingUser = await userModel.findOne({ email });
     if (existingUser) {
@@ -43,7 +45,7 @@ const register = async (req, res) => {
       password: hashedPassword,
       role,
       profile: {
-        profilePhoto: cloudResponse.secure_url,
+        profilePhoto: req.file ? cloudResponse.secure_url : null,
       },
     });
     res.json({ message: "User Registered Successfully", success: true });
