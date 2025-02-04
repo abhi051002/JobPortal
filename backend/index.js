@@ -20,9 +20,10 @@ connectDB();
 
 // For allowing a single route
 const corsOption = {
-  origin: "http://localhost:5173",
+  origin: ["http://localhost:5173", "https://job-portal-q7vfffrlx-abhi051002s-projects.vercel.app"],
   credentials: true,
 };
+
 app.use(cors(corsOption));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/company", companyRouter);
