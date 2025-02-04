@@ -20,6 +20,7 @@ app.use(cors({
   allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept, Authorization, token" // Add 'token' here
 }));
 
+
 // ✅ Handle OPTIONS requests explicitly
 app.options("*", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
