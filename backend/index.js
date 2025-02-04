@@ -19,9 +19,11 @@ app.use(cookieParser());
 connectDB();
 
 // For allowing a single route
-const corsOption = {
-  origin: ["http://localhost:5173", "https://job-portal-q7vfffrlx-abhi051002s-projects.vercel.app"],
-  credentials: true,
+const corsOptions = {
+  origin: "*", // Allows all origins
+  credentials: true, // Allows cookies and credentials
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type,Authorization"
 };
 
 app.use(cors(corsOption));
