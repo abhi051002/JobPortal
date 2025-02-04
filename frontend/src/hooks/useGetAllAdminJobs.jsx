@@ -22,7 +22,7 @@ const useGetAllAdminJobs = () => {
         if (res.data.success) {
           dispatch(setAllAdminJobs(res.data.jobs));
         } else {
-          console.log(res.data.message);
+          console.error(res.data.message);
         }
       } catch (error) {
         console.error(error);

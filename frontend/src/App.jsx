@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "./components/shared/Navbar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Signup from "./components/Auth/Signup";
 import Home from "./components/Home";
@@ -18,9 +18,11 @@ import { useDispatch } from "react-redux";
 import { setUser } from "./redux/authSlice";
 import PostJob from "./components/Admin/PostJob";
 import Applicants from "./components/Admin/Applicants";
+import ProtectedRoute from "./components/Admin/ProtectedRoute";
 
 const App = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const isTokenExpired = (token) => {
     try {
       const decoded = jwtDecode(token);
@@ -33,11 +35,10 @@ const App = () => {
   };
   const token = localStorage.getItem("token");
   if (token && isTokenExpired(token)) {
-    console.log("Token is expired");
+    navigate("/login");
     dispatch(setUser(null));
     localStorage.removeItem("token");
   } else {
-    console.log("Token is valid");
   }
   return (
     <>
@@ -52,12 +53,54 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
 
         {/* Admin Routes */}
-        <Route path="/admin/companies" element={<Companies />} />
-        <Route path="/admin/companies/create" element={<CreateCompanies />} />
-        <Route path="/admin/companies/:id" element={<CompanySetup />} />
-        <Route path="/admin/jobs" element={<Job />} />
-        <Route path="/admin/jobs/create" element={<PostJob />} />
-        <Route path="/admin/jobs/:id/applicants" element={<Applicants />} />
+        <Route
+          path="/admin/companies"
+          element={
+            <ProtectedRoute>
+              <Companies />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/companies/create"
+          element={
+            <ProtectedRoute>
+              <CreateCompanies />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/companies/:id"
+          element={
+            <ProtectedRoute>
+              <CompanySetup />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/jobs"
+          element={
+            <ProtectedRoute>
+              <Job />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/jobs/create"
+          element={
+            <ProtectedRoute>
+              <PostJob />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/jobs/:id/applicants"
+          element={
+            <ProtectedRoute>
+              <Applicants />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </>

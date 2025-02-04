@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 const jobs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const AppliedJobTable = () => {
   const { allAppliedJobs } = useSelector((store) => store.job);
-  console.log(allAppliedJobs);
   const dateFormat = (date) => {
     const adjustedDate = new Date(date);
 

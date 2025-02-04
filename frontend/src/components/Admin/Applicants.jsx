@@ -24,7 +24,7 @@ const Applicants = () => {
       if (res.data.success) {
         dispatch(setApplicants(res.data.job));
       } else {
-        console.log(res.data);
+        console.error(res.data);
       }
       try {
       } catch (error) {

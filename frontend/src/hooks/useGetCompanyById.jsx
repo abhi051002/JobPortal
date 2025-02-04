@@ -20,7 +20,7 @@ const useGetCompanyById = (companyId) => {
         if (res.data.success) {
           dispatch(setSingleCompany(res.data.company));
         } else {
-          console.log(res.data.message);
+          console.error(res.data.message);
         }
       } catch (error) {
         console.error(error);
