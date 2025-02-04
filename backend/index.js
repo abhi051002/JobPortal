@@ -24,9 +24,9 @@ app.use(cors({
 app.options("*", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.sendStatus(200); // Preflight request response
-});
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, token"); // Add 'token'
+  res.sendStatus(200);
+})
 
 // ✅ Other middleware
 app.use(express.json());
