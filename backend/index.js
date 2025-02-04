@@ -14,10 +14,10 @@ const PORT = process.env.PORT || 4000;
 
 // ✅ Apply CORS before anything else
 app.use(cors({
-  origin: "*",  // Allow all origins
+  origin: "*", // Allows all origins
   credentials: true,
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-  allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept, Authorization, token" // Add 'token' here
 }));
 
 // ✅ Handle OPTIONS requests explicitly
