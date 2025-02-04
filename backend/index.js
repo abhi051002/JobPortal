@@ -8,34 +8,44 @@ import companyRouter from "./routes/companyRoute.js";
 import jobRouter from "./routes/jobRoute.js";
 import applicationRouter from "./routes/applicationRoutes.js";
 
-dotenv.config({});
-
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// For allowing a single route
-const corsOptions = {
-  origin: "*", // Allows all origins
-  credentials: true, // Allows cookies and credentials
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: "Content-Type,Authorization",
-};
+// ✅ Apply CORS before anything else
+app.use(cors({
+  origin: "*",  // Allow all origins
+  credentials: true,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+}));
 
-app.use(cors(corsOptions));
+// ✅ Handle OPTIONS requests explicitly
+app.options("*", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.sendStatus(200); // Preflight request response
+});
+
+// ✅ Other middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+connectDB();
+
+// ✅ Routes
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/company", companyRouter);
 app.use("/api/v1/job", jobRouter);
 app.use("/api/v1/application", applicationRouter);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-connectDB();
-// app.use(cors());
+// ✅ Root Route
 app.get("/", (req, res) => {
-  res.status(200).send("Job Portal API is Working");
+  res.status(200).send("Job Portal API is Working Fine");
 });
 
+// ✅ Start Server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
