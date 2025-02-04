@@ -13,17 +13,12 @@ dotenv.config({});
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-connectDB();
-
 // For allowing a single route
 const corsOptions = {
   origin: "*", // Allows all origins
   credentials: true, // Allows cookies and credentials
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: "Content-Type,Authorization"
+  allowedHeaders: "Content-Type,Authorization",
 };
 
 app.use(cors(corsOptions));
@@ -32,6 +27,10 @@ app.use("/api/v1/company", companyRouter);
 app.use("/api/v1/job", jobRouter);
 app.use("/api/v1/application", applicationRouter);
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+connectDB();
 // app.use(cors());
 app.get("/", (req, res) => {
   res.status(200).send("Job Portal API is Working");
