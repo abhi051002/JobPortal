@@ -1,22 +1,25 @@
 import { JOB_API_ENDPOINT } from "@/constant";
-import { setAllJobs } from "@/redux/jobSlice";
+import { setAllBrowsedJobs } from "@/redux/jobSlice";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-const useGetAllJobs = () => {
+const useGetBrowsedJobs = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const { searchQuery } = useSelector((store) => store.job);
   useEffect(() => {
-    const fetchAllJobs = async () => {
+    const fetchBrowsedJobs = async () => {
       try {
-        const res = await axios.get(`${JOB_API_ENDPOINT}/get?keyword`, {
-          withCredentials: true,
-          headers: { token },
-        });
+        const res = await axios.get(
+          `${JOB_API_ENDPOINT}/get?keyword=${searchQuery}`,
+          {
+            withCredentials: true,
+            headers: { token },
+          }
+        );
         if (res.data.success) {
-          dispatch(setAllJobs(res.data.jobs));
+          dispatch(setAllBrowsedJobs(res.data.jobs));
         } else {
           console.error(res.data.message);
         }
@@ -24,8 +27,8 @@ const useGetAllJobs = () => {
         console.error(error);
       }
     };
-    fetchAllJobs();
+    fetchBrowsedJobs();
   }, []);
 };
 
-export default useGetAllJobs;
+export default useGetBrowsedJobs;
