@@ -17,7 +17,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5174",
-      "https://job-portal-frontend-ochre-delta.vercel.app/",
+      "https://job-portal-frontend-ochre-delta.vercel.app",
     ], // Your frontend URL
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -29,7 +29,7 @@ app.use(
 app.options("*", (req, res) => {
   res.header("Access-Control-Allow-Origin", [
     "http://localhost:5174",
-    "https://job-portal-frontend-ochre-delta.vercel.app/",
+    "https://job-portal-frontend-ochre-delta.vercel.app",
   ]);
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
