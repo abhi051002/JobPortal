@@ -13,21 +13,32 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // ✅ Apply CORS before anything else
-app.use(cors({
-  origin: "*", // Allows all origins
-  credentials: true,
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-  allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept, Authorization, token" // Add 'token' here
-}));
-
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5174",
+      "https://job-portal-frontend-ochre-delta.vercel.app/",
+    ], // Your frontend URL
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "token"],
+  })
+);
 
 // ✅ Handle OPTIONS requests explicitly
 app.options("*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", [
+    "http://localhost:5174",
+    "https://job-portal-frontend-ochre-delta.vercel.app/",
+  ]);
+  res.header("Access-Control-Allow-Credentials", "true");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, token"); // Add 'token'
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization, token"
+  );
   res.sendStatus(200);
-})
+});
 
 // ✅ Other middleware
 app.use(express.json());
