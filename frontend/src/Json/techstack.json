@@ -1,0 +1,100 @@
+{
+    "techStacks": {
+      "frontend": [
+        "React",
+        "Angular",
+        "Vue",
+        "Svelte",
+        "Next.js",
+        "Nuxt.js",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "TypeScript"
+      ],
+      "backend": [
+        "Node.js",
+        "Express",
+        "Django",
+        "Flask",
+        "Ruby on Rails",
+        "Spring Boot",
+        "ASP.NET",
+        "Laravel",
+        "Phoenix",
+        "Koa"
+      ],
+      "databases": [
+        "MySQL",
+        "PostgreSQL",
+        "MongoDB",
+        "SQLite",
+        "Redis",
+        "Oracle",
+        "SQL Server",
+        "Cassandra",
+        "Firebase",
+        "DynamoDB"
+      ],
+      "devOps": [
+        "Docker",
+        "Kubernetes",
+        "Jenkins",
+        "Travis CI",
+        "CircleCI",
+        "GitLab CI",
+        "Terraform",
+        "Ansible",
+        "Puppet",
+        "Chef"
+      ],
+      "cloudProviders": [
+        "AWS",
+        "Google Cloud",
+        "Microsoft Azure",
+        "IBM Cloud",
+        "Oracle Cloud",
+        "DigitalOcean",
+        "Heroku",
+        "Netlify",
+        "Vercel",
+        "Linode"
+      ],
+      "googleCloud": [
+        "Compute Engine",
+        "App Engine",
+        "Kubernetes Engine",
+        "Cloud Functions",
+        "Cloud Run",
+        "BigQuery",
+        "Cloud Storage",
+        "Cloud SQL",
+        "Firestore",
+        "Pub/Sub"
+      ],
+      "microsoftTechnologies": [
+        "Azure",
+        "Azure DevOps",
+        "Azure Functions",
+        "Azure Kubernetes Service",
+        "Azure SQL Database",
+        "Azure Cosmos DB",
+        "Power BI",
+        "Dynamics 365",
+        "SharePoint",
+        "Visual Studio"
+      ],
+      "otherTechnologies": [
+        "GraphQL",
+        "REST",
+        "gRPC",
+        "WebSockets",
+        "RabbitMQ",
+        "Kafka",
+        "Elasticsearch",
+        "Logstash",
+        "Kibana",
+        "Prometheus"
+      ]
+    }
+  }

@@ -30,6 +30,8 @@ const JobDescription = () => {
       });
       if (res.data.success) {
         dispatch(setSingleJob(res.data.job));
+        // console.log(res.data.job);
+        
         setIsApplied(
           res.data.job.applications.some(
             (application) => application.applicant === user?.id
@@ -79,10 +81,10 @@ const JobDescription = () => {
     }
   };
   return (
-    <div className="max-w-7xl mx-auto my-10">
+    <div className="mx-auto my-10 max-w-7xl">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-bold text-xl">{singleJob.title}</h1>
+          <h1 className="text-xl font-bold">{singleJob.title}</h1>
           <div className="flex items-center gap-2 mt-4">
             <Badge className={"text-blue-700 font-bold"} variant="ghost">
               {singleJob.position} Positions
@@ -108,41 +110,48 @@ const JobDescription = () => {
           {isApplied ? "Already Applied!" : "Apply Now"}
         </Button>
       </div>
-      <h1 className="border-b-2 border-b-gray-300 font-medium py-4">
+      <h1 className="py-4 font-medium border-b-2 border-b-gray-300">
         Job Description
       </h1>
       <div className="my-4">
-        <h1 className="font-bold my-1">
+        <h1 className="my-1 font-bold">
           Role :{" "}
           <span className="pl-4 font-normal text-gray-800">
             {singleJob.title}
           </span>
         </h1>
-        <h1 className="font-bold my-1">
+        <h1 className="my-1 font-bold">
           Location :{" "}
           <span className="pl-4 font-normal text-gray-800">
             {singleJob.location}
           </span>
         </h1>
-        <h1 className="font-bold my-1">
-          Description :{" "}
+        <h1 className="my-1 font-bold">
+          Location :{" "}
           <span className="pl-4 font-normal text-gray-800">
-            {singleJob.description}
+            {singleJob.location}
           </span>
         </h1>
-        <h1 className="font-bold my-1">
+        
+        <h1 className="my-1 font-bold">
+        Requirements :
+          <span className="pl-4 font-normal text-gray-800">
+            {singleJob.requirements.join(", ")}
+          </span>
+        </h1>
+        <h1 className="my-1 font-bold">
           Experience :{" "}
           <span className="pl-4 font-normal text-gray-800">
             {singleJob.experienceLevel}yr
           </span>
         </h1>
-        <h1 className="font-bold my-1">
+        <h1 className="my-1 font-bold">
           Salary :{" "}
           <span className="pl-4 font-normal text-gray-800">
             {singleJob.salary} LPA
           </span>
         </h1>
-        <h1 className="font-bold my-1">
+        <h1 className="my-1 font-bold">
           Total Applicants :{" "}
           <span className="pl-4 font-normal text-gray-800">
             {singleJob?.applications?.length === 0
@@ -150,13 +159,13 @@ const JobDescription = () => {
               : singleJob?.applications?.length}
           </span>
         </h1>
-        <h1 className="font-bold my-1">
+        <h1 className="my-1 font-bold">
           Positions :{" "}
           <span className="pl-4 font-normal text-gray-800">
             {singleJob?.position}
           </span>
         </h1>
-        <h1 className="font-bold my-1">
+        <h1 className="my-1 font-bold">
           Posted Date :{" "}
           <span className="pl-4 font-normal text-gray-800">
             {dateFormatter(singleJob.createdAt)}
