@@ -13,26 +13,31 @@ const Browse = () => {
     return () => {
       dispatch(setSearchQuery(""));
     };
-  }, [dispatch]); // Added dispatch to dependency array
+  }, [dispatch]);
 
   if (!allBrowsedJobs?.length) {
     return (
-      <div className="max-w-7xl mx-auto my-10">
-        <p className="text-gray-500 text-center">No jobs found</p>
+      <div className="flex justify-center items-center h-screen text-gray-500 text-lg">
+        <div className="text-center p-8 rounded-lg bg-white ">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+            No Jobs Found
+          </h2>
+          <p className="text-gray-600 text-sm md:text-base">
+            Try adjusting your search criteria
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto my-10">
-      <h1 className="font-semibold text-lg my-10">
+    <div className="container mx-auto px-4 py-6 max-w-7xl">
+      <h2 className="text-xl font-semibold text-gray-800 mb-4">
         Search Results ({allBrowsedJobs.length})
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {allBrowsedJobs.map((job) => (
-          <div key={job._id} className="mb-5">
-            <Job job={job} />
-          </div>
+          <Job key={job.id} job={job} />
         ))}
       </div>
     </div>

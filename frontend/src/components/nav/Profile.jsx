@@ -16,9 +16,9 @@ const Profile = () => {
   const { user } = useSelector((store) => store.auth);
   const isHaveResume = user?.profile?.resume;
   return (
-    <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8">
-      <div className="flex justify-between">
-        <div className="flex items-center gap-4">
+    <div className="max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-6 sm:p-8">
+      <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
           <Avatar>
             <AvatarImage
               src={
@@ -27,38 +27,40 @@ const Profile = () => {
                   : "https://static.vecteezy.com/system/resources/previews/008/214/517/non_2x/abstract-geometric-logo-or-infinity-line-logo-for-your-company-free-vector.jpg"
               }
               alt="Profile"
-              className="w-24 h-24"
+              className="w-24 h-24 rounded-full"
             />
           </Avatar>
-          <div>
+          <div className="text-center sm:text-left">
             <h1 className="font-medium text-xl">{user?.fullname}</h1>
             <p className="text-sm text-gray-600">{user?.profile?.bio}</p>
           </div>
         </div>
         <Button
           onClick={() => setOpen(true)}
-          className="text-right"
+          className="mt-4 sm:mt-0"
           variant="outline"
         >
           <Pen />
         </Button>
       </div>
-      <div className="my-5">
-        <div className="flex items-center gap-3 my-2">
-          <Mail />
-          <span>{user?.email}</span>
+      <div className="my-5 space-y-3">
+        <div className="flex items-center gap-3">
+          <Mail className="w-5 h-5" />
+          <span className="text-sm sm:text-base">{user?.email}</span>
         </div>
-        <div className="flex items-center gap-3 my-2">
-          <Contact />
-          <span>{user?.phoneNumber}</span>
+        <div className="flex items-center gap-3">
+          <Contact className="w-5 h-5" />
+          <span className="text-sm sm:text-base">{user?.phoneNumber}</span>
         </div>
       </div>
       <div className="my-5">
         <h1 className="font-semibold text-md mb-3">Skills</h1>
-        <div className="flex items-center gap-1">
+        <div className="flex flex-wrap gap-2">
           {user?.profile?.skills.length
             ? user?.profile?.skills.map((item, index) => (
-                <Badge key={index}>{item}</Badge>
+                <Badge key={index} className="text-xs sm:text-sm">
+                  {item}
+                </Badge>
               ))
             : "N/A"}
         </div>
@@ -69,7 +71,7 @@ const Profile = () => {
           <a
             target="_blank"
             href={user?.profile?.resume}
-            className="font-medium text-sm hover:underline text-blue-500 w-full"
+            className="font-medium text-sm hover:underline text-blue-500 w-full truncate"
           >
             {user?.profile?.resumeOriginalName}
           </a>
