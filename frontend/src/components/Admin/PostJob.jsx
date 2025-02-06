@@ -21,6 +21,7 @@ const PostJob = () => {
   const { companies } = useSelector((store) => store.company);
   const [load, setLoad] = useState(false);
   const navigate = useNavigate();
+  const jobType = ["Full time", "Part time", "Remote", "Hybrid", "Contractual"];
   const [input, setInput] = useState({
     title: "",
     description: "",
@@ -38,6 +39,9 @@ const PostJob = () => {
   const selectChangeHandler = (value) => {
     const selectedCompany = companies.find((company) => company._id === value);
     setInput({ ...input, companyId: selectedCompany?._id });
+  };
+  const jobTypeSelectChangeHandler = (value) => {
+    setInput({ ...input, jobType: value });
   };
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -119,13 +123,24 @@ const PostJob = () => {
             />
           </div>
           <div className="flex flex-col ">
-          <Label>Job Type</Label>
-            
-            <select name="jobType" onChange={changeEventHandler} className="my-1 mt-4 col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 focus-visible:ring-offset-0 focus-visible:ring-0 outline" >
-              <option value="Full Time">Full Time</option>
-              <option value="Part Time">Part Time</option>
-              <option value="Remote">Remote</option>
-            </select>            
+            <Label className="mb-3">Job Type</Label>
+            <Select onValueChange={jobTypeSelectChangeHandler}>
+              <SelectTrigger>
+                <SelectValue placeholder={"Select a Job Type"}></SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Job Type</SelectLabel>
+                  {jobType.map((type, index) => {
+                    return (
+                      <SelectItem key={index} value={type}>
+                        {type}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div>
             <Label>Experience Level</Label>
