@@ -64,7 +64,7 @@ const PostJob = () => {
   return (
     <div className="flex items-center justify-center w-screen my-5">
       <form
-        className="p-8 max-w-6xl border border-gray-200 shadow-lg rounded-md"
+        className="max-w-6xl p-8 border border-gray-200 rounded-md shadow-lg"
         onSubmit={submitHandler}
       >
         <div className="grid grid-cols-2 gap-3 mb-4">
@@ -75,7 +75,7 @@ const PostJob = () => {
               name="title"
               value={input.title}
               onChange={changeEventHandler}
-              className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0 "
             />
           </div>
           <div>
@@ -85,7 +85,7 @@ const PostJob = () => {
               name="description"
               value={input.description}
               onChange={changeEventHandler}
-              className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
             />
           </div>
           <div>
@@ -95,7 +95,7 @@ const PostJob = () => {
               name="requirements"
               value={input.requirements}
               onChange={changeEventHandler}
-              className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
             />
           </div>
           <div>
@@ -105,7 +105,7 @@ const PostJob = () => {
               name="salary"
               value={input.salary}
               onChange={changeEventHandler}
-              className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
             />
           </div>
           <div>
@@ -115,18 +115,17 @@ const PostJob = () => {
               name="location"
               value={input.location}
               onChange={changeEventHandler}
-              className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
             />
           </div>
-          <div>
-            <Label>Job Type</Label>
-            <Input
-              type="text"
-              name="jobType"
-              value={input.jobType}
-              onChange={changeEventHandler}
-              className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-            />
+          <div className="flex flex-col ">
+          <Label>Job Type</Label>
+            
+            <select name="jobType" onChange={changeEventHandler} className="my-1 mt-4 col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6 focus-visible:ring-offset-0 focus-visible:ring-0 outline" >
+              <option value="Full Time">Full Time</option>
+              <option value="Part Time">Part Time</option>
+              <option value="Remote">Remote</option>
+            </select>            
           </div>
           <div>
             <Label>Experience Level</Label>
@@ -135,7 +134,7 @@ const PostJob = () => {
               name="experience"
               value={input.experience}
               onChange={changeEventHandler}
-              className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
             />
           </div>
           <div>
@@ -145,7 +144,7 @@ const PostJob = () => {
               name="position"
               value={input.position}
               onChange={changeEventHandler}
-              className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
             />
           </div>
         </div>
@@ -176,7 +175,7 @@ const PostJob = () => {
           {load ? "Please wait..." : "Post Job"}
         </Button>
         {companies.length === 0 && (
-          <p className="text-xs text-red-600 font-bold text-center my-3">
+          <p className="my-3 text-xs font-bold text-center text-red-600">
             *Please Register a company to Post a Job
           </p>
         )}
