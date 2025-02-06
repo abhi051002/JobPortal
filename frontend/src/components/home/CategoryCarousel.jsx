@@ -20,6 +20,7 @@ const category = [
   "Technical Content Writer",
   "Full Stack Developer",
 ];
+
 const CategoryCarousel = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,14 +29,17 @@ const CategoryCarousel = () => {
     navigate("/browse");
   };
   return (
-    <div>
-      <Carousel className="w-full max-w-xl mx-auto my-20">
+    <div className="py-8 md:py-12 lg:py-20">
+      <Carousel className="w-full max-w-[90%] sm:max-w-lg md:max-w-xl mx-auto">
         <CarouselContent>
           {category.map((item, index) => (
-            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+            <CarouselItem
+              key={index}
+              className="basis-full sm:basis-1/2 md:basis-1/2 lg:basis-1/3 px-2"
+            >
               <Button
                 onClick={() => searchJobHandler(item)}
-                className="rounded-full"
+                className="rounded-full w-full text-xs sm:text-sm md:text-base whitespace-nowrap overflow-hidden text-ellipsis"
                 variant="outline"
               >
                 {item}
@@ -43,8 +47,8 @@ const CategoryCarousel = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="scale-75 sm:scale-100 sm:flex ml-2 sm:ml-0" />
+        <CarouselNext className="scale-75 sm:scale-100 sm:flex mr-2 sm:mr-0" />
       </Carousel>
     </div>
   );
