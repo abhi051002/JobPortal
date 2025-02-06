@@ -84,146 +84,166 @@ const Signup = () => {
   });
 
   return (
-    <div className="flex items-center justify-center max-w-7xl mx-auto">
+    <div className="flex items-center justify-center min-h-[calc(100vh-200px)] px-4 py-8 mx-auto max-w-7xl">
       <form
         onSubmit={(event) => onSubmitHandler(event)}
-        className="w-1/2 border border-gray-200 rounded-md p-4 my-10"
+        className="w-full md:w-2/3 lg:w-1/2 border border-gray-200 rounded-md p-4 sm:p-6 md:p-8 my-4 sm:my-6 md:my-10 bg-white shadow-sm"
       >
-        <h1 className="font-bold text-xl mb-5">Sign up</h1>
-        <div className="my-2">
-          <Label>Full Name</Label>
-          <Input
-            className="mt-2"
-            type="text"
-            placeholder="Your Name"
-            name="fullname"
-            value={input.fullname}
-            onChange={(e) => changeEventHandler(e)}
-          />
-        </div>
-        <div className="my-2">
-          <Label>Email</Label>
-          <Input
-            className="mt-2"
-            type="email"
-            placeholder="email@example.com"
-            name="email"
-            value={input.email}
-            onChange={(e) => changeEventHandler(e)}
-          />
-        </div>
-        <div className="my-2">
-          <Label>Phone Number</Label>
-          <Input
-            className="mt-2"
-            type="tel"
-            placeholder="xxxxx-xxxxx"
-            name="phoneNumber"
-            value={input.phoneNumber}
-            onChange={(e) => changeEventHandler(e)}
-          />
-        </div>
-        <div className="my-2">
-          <Label>Password</Label>
-          <div className="relative">
+        <h1 className="font-bold text-xl sm:text-2xl mb-5">Sign up</h1>
+
+        <div className="space-y-4">
+          <div>
+            <Label className="text-sm sm:text-base">Full Name</Label>
             <Input
-              className="mt-2 pr-10"
-              type={showPassword ? "text" : "password"}
-              placeholder="your password"
-              name="password"
-              value={input.password}
+              className="mt-2"
+              type="text"
+              placeholder="Your Name"
+              name="fullname"
+              value={input.fullname}
               onChange={(e) => changeEventHandler(e)}
             />
-            <button
-              type="button"
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-              onClick={togglePasswordVisibility}
-            >
-              {showPassword ? (
-                <EyeOff className="h-5 w-5" />
-              ) : (
-                <Eye className="h-5 w-5" />
-              )}
-            </button>
           </div>
-        </div>
-        <div className="my-2">
-          <Label>Confirm Password</Label>
-          <div className="relative">
+
+          <div>
+            <Label className="text-sm sm:text-base">Email</Label>
             <Input
-              className="mt-2 pr-10"
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
-              value={input.confirmPassword}
+              className="mt-2"
+              type="email"
+              placeholder="email@example.com"
+              name="email"
+              value={input.email}
               onChange={(e) => changeEventHandler(e)}
-              placeholder="repeat password"
             />
-            <button
-              type="button"
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-              onClick={toggleConfirmPasswordVisibility}
-            >
-              {showConfirmPassword ? (
-                <EyeOff className="h-5 w-5" />
-              ) : (
-                <Eye className="h-5 w-5" />
-              )}
-            </button>
           </div>
-        </div>
-        <div className="flex items-center justify-between">
-          <RadioGroup className="flex items-center gap-4 my-5">
-            <div className="flex items-center space-x-2">
-              <Input
-                type="radio"
-                name="role"
-                id="student"
-                value="student"
-                className="cursor-pointer"
-                checked={input.role === "student"}
-                onChange={(e) => changeEventHandler(e)}
-              />
-              <Label htmlFor="student">Student</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Input
-                type="radio"
-                name="role"
-                id="recruiters"
-                value="recruiters"
-                checked={input.role === "recruiters"}
-                onChange={(e) => changeEventHandler(e)}
-                className="cursor-pointer"
-              />
-              <Label htmlFor="recruiters">Recruiters</Label>
-            </div>
-          </RadioGroup>
-          <div className="flex items-center gap-2">
-            <Label>Profile</Label>
+
+          <div>
+            <Label className="text-sm sm:text-base">Phone Number</Label>
             <Input
-              accept="image/*"
-              type="file"
-              className="cursor-pointer"
-              name="file"
-              onChange={(e) => changeFileHandler(e)}
+              className="mt-2"
+              type="tel"
+              placeholder="xxxxx-xxxxx"
+              name="phoneNumber"
+              value={input.phoneNumber}
+              onChange={(e) => changeEventHandler(e)}
             />
           </div>
+
+          <div>
+            <Label className="text-sm sm:text-base">Password</Label>
+            <div className="relative">
+              <Input
+                className="mt-2 pr-10"
+                type={showPassword ? "text" : "password"}
+                placeholder="your password"
+                name="password"
+                value={input.password}
+                onChange={(e) => changeEventHandler(e)}
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <Label className="text-sm sm:text-base">Confirm Password</Label>
+            <div className="relative">
+              <Input
+                className="mt-2 pr-10"
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={input.confirmPassword}
+                onChange={(e) => changeEventHandler(e)}
+                placeholder="repeat password"
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                onClick={toggleConfirmPasswordVisibility}
+              >
+                {showConfirmPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <RadioGroup className="flex flex-row justify-center items-start sm:items-center gap-8 sm:gap-4">
+              <div className="flex items-center space-x-2">
+                <Input
+                  type="radio"
+                  name="role"
+                  id="student"
+                  value="student"
+                  className="cursor-pointer"
+                  checked={input.role === "student"}
+                  onChange={(e) => changeEventHandler(e)}
+                />
+                <Label htmlFor="student" className="text-sm sm:text-base">
+                  Student
+                </Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Input
+                  type="radio"
+                  name="role"
+                  id="recruiters"
+                  value="recruiters"
+                  checked={input.role === "recruiters"}
+                  onChange={(e) => changeEventHandler(e)}
+                  className="cursor-pointer"
+                />
+                <Label htmlFor="recruiters" className="text-sm sm:text-base">
+                  Recruiters
+                </Label>
+              </div>
+            </RadioGroup>
+
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+              <Label className="text-sm sm:text-base">Profile</Label>
+              <Input
+                accept="image/*"
+                type="file"
+                className="cursor-pointer text-sm sm:text-base"
+                name="file"
+                onChange={(e) => changeFileHandler(e)}
+              />
+            </div>
+          </div>
+
+          {loading ? (
+            <Button disabled className="w-full my-4">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4">
+              Signup
+            </Button>
+          )}
+
+          <div className="text-center sm:text-left">
+            <span className="text-sm sm:text-base">
+              Already have an account?{" "}
+              <Link
+                to={"/login"}
+                className="text-blue-600 hover:text-blue-700 font-medium"
+              >
+                Login
+              </Link>
+            </span>
+          </div>
         </div>
-        {loading ? (
-          <Button className="w-full my-4">
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please Wait
-          </Button>
-        ) : (
-          <Button type="submit" className="w-full my-4">
-            Signup
-          </Button>
-        )}
-        <span className="text-sm">
-          Already have an account?{" "}
-          <Link to={"/login"} className="text-blue-600">
-            Login
-          </Link>
-        </span>
       </form>
     </div>
   );
