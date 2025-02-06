@@ -105,8 +105,8 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-            <RadioGroup className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 my-3 sm:my-5">
+          <div className="flex flex-row justify-center sm:justify-between">
+            <RadioGroup className="flex flex-row items-center sm:items-center gap-2 sm:gap-4 my-3 sm:my-5">
               <div className="flex items-center space-x-2">
                 <Input
                   type="radio"
