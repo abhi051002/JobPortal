@@ -186,7 +186,7 @@ const Signup = () => {
                   name="role"
                   id="student"
                   value="student"
-                  className="cursor-pointer"
+                  className="h-4 w-4 cursor-pointer accent-blue-600"
                   checked={input.role === "student"}
                   onChange={(e) => changeEventHandler(e)}
                 />
@@ -202,7 +202,7 @@ const Signup = () => {
                   value="recruiters"
                   checked={input.role === "recruiters"}
                   onChange={(e) => changeEventHandler(e)}
-                  className="cursor-pointer"
+                  className="h-4 w-4 cursor-pointer accent-blue-600"
                 />
                 <Label htmlFor="recruiters" className="text-sm sm:text-base">
                   Recruiters
