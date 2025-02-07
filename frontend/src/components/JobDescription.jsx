@@ -96,20 +96,18 @@ const JobDescription = () => {
             <Badge className="text-[#7209b7] font-bold" variant="ghost">
               {singleJob.salary} LPA
             </Badge>
-            
+          </div>
+          <div className="space-y-4">
+            <h1 className="text-xl font-bold">Technologies Required</h1>
             {singleJob.requirements.map((requirement, index) => (
               <Badge
                 key={index}
-                className="text-[#7209b7] font-bold"
+                className="text-[#ec992b] font-bold"
                 variant="ghost"
               >
                 {requirement}
               </Badge>
             ))}
-            {/*           
-            <Badge className="text-[#7209b7] font-bold" variant="ghost">
-              {singleJob.requirements.join(", ")}
-              </Badge> */}
           </div>
         </div>
         <Button
@@ -135,7 +133,7 @@ const JobDescription = () => {
           { label: "Role", value: singleJob.title },
           { label: "Location", value: singleJob.location },
           { label: "Description", value: singleJob.description },
-          { label: "Requirements", value: singleJob.requirements.join(", ") },
+          { label: "Technologies ", value: singleJob.requirements.join(", ") },
           { label: "Experience", value: `${singleJob.experienceLevel}yr` },
           { label: "Salary", value: `${singleJob.salary} LPA` },
           {

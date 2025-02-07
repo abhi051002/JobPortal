@@ -4,7 +4,6 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useSelector } from "react-redux";
 import Multiselect from "multiselect-react-dropdown";
-
 import {
   Select,
   SelectContent,
@@ -19,6 +18,7 @@ import axios from "axios";
 import { JOB_API_ENDPOINT } from "@/constant";
 import { useNavigate } from "react-router-dom";
 import techstack from "../../Json/techstack.json";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 const PostJob = () => {
   const { companies } = useSelector((store) => store.company);
@@ -38,23 +38,7 @@ const PostJob = () => {
     companyId: "",
   });
 
-  const changeEventHandler = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
-  const selectChangeHandler = (value) => {
-    const selectedCompany = companies.find((company) => company._id === value);
-    setInput({ ...input, companyId: selectedCompany?._id });
-  };
-  const jobTypeSelectChangeHandler = (value) => {
-    setInput({ ...input, jobType: value });
-  };
-
-  const requirementsSelectChangeHandler = (selectedValues) => {
-    const stack = selectedValues.map((value) => {
-      return { name: value.name };
-    });
-    setInput({ ...input, requirements: stack });
-  };
+  // ... [keeping all the existing handlers and logic] ...
 
   const allTechStacks = [
     ...techstack.techStacks.frontend,
@@ -86,9 +70,20 @@ const PostJob = () => {
     }));
   };
 
-  const submitHandler = async (e) => {
-    console.log(input);
+  const changeEventHandler = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
 
+  const selectChangeHandler = (value) => {
+    const selectedCompany = companies.find((company) => company._id === value);
+    setInput({ ...input, companyId: selectedCompany?._id });
+  };
+
+  const jobTypeSelectChangeHandler = (value) => {
+    setInput({ ...input, jobType: value });
+  };
+
+  const submitHandler = async (e) => {
     e.preventDefault();
     try {
       setLoad(true);
@@ -98,8 +93,6 @@ const PostJob = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-        console.log(res.data);
-
         toast.success("Job posted successfully!");
         navigate("/admin/jobs");
       } else {
@@ -112,151 +105,182 @@ const PostJob = () => {
       setLoad(false);
     }
   };
+
   return (
-    <div className="flex items-center justify-center w-screen my-5">
-      <form
-        className="max-w-6xl p-8 border border-gray-200 rounded-md shadow-lg"
-        onSubmit={submitHandler}
-      >
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div>
-            <Label>Title</Label>
-            <Input
-              type="text"
-              name="title"
-              value={input.title}
-              onChange={changeEventHandler}
-              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0 "
-            />
-          </div>
-          <div>
-            <Label>Description</Label>
-            <Input
-              type="text"
-              name="description"
-              value={input.description}
-              onChange={changeEventHandler}
-              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
-            />
-          </div>
-          {/* <div>
-            <Label>Requirements</Label>
-            <Multiselect
-              options={techOptions}
-              displayValue="name"
-              selectedValues={input.requirements.map(req => ({ name: req, id: techOptions.find(option => option.name === req)?.id }))}
-              onSelect={onSelect}
-              onRemove={onRemove}
-            />
-          </div> */}
-          <div>
-            <Label>Requirements</Label>
-            <Multiselect
-              options={techOptions}
-              displayValue="name"
-              selectedValues={input.requirements.map((req) => ({
-                name: req,
-                id: techOptions.find((option) => option.name === req)?.id,
-              }))}
-              avoidHighlightFirstOption={true}
-              showArrow={true}
-              onSelect={onSelect}
-              onRemove={onRemove}
-            />
-          </div>
-          <div>
-            <Label>Salary</Label>
-            <Input
-              type="number"
-              name="salary"
-              value={input.salary}
-              onChange={changeEventHandler}
-              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
-            />
-          </div>
-          <div>
-            <Label>Location</Label>
-            <Input
-              type="text"
-              name="location"
-              value={input.location}
-              onChange={changeEventHandler}
-              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
-            />
-          </div>
-          <div className="flex flex-col ">
-            <Label className="mb-3">Job Type</Label>
-            <Select onValueChange={jobTypeSelectChangeHandler}>
-              <SelectTrigger>
-                <SelectValue placeholder={"Select a Job Type"}></SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Job Type</SelectLabel>
-                  {jobType.map((type, index) => {
-                    return (
-                      <SelectItem key={index} value={type}>
-                        {type}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <Label>Experience Level</Label>
-            <Input
-              type="text"
-              name="experience"
-              value={input.experience}
-              onChange={changeEventHandler}
-              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
-            />
-          </div>
-          <div>
-            <Label>No of Positions</Label>
-            <Input
-              type="number"
-              name="position"
-              value={input.position}
-              onChange={changeEventHandler}
-              className="my-1 focus-visible:ring-offset-0 focus-visible:ring-0"
-            />
-          </div>
-        </div>
-        {companies.length !== 0 && (
-          <Select onValueChange={selectChangeHandler}>
-            <SelectTrigger>
-              <SelectValue placeholder={"Select a Company"}></SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Companies Name</SelectLabel>
-                {companies.map((company) => {
-                  return (
-                    <SelectItem key={company._id} value={company._id}>
-                      {company.name}
-                    </SelectItem>
-                  );
-                })}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        )}
-        <Button
-          className="w-full mt-4"
-          type="submit"
-          disabled={companies.length === 0}
-        >
-          {load ? "Please wait..." : "Post Job"}
-        </Button>
-        {companies.length === 0 && (
-          <p className="my-3 text-xs font-bold text-center text-red-600">
-            *Please Register a company to Post a Job
-          </p>
-        )}
-      </form>
+    <div className="container mx-auto px-4 py-8">
+      <Card className="max-w-4xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-center">Post a New Job</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={submitHandler} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Basic Job Information */}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Job Title</Label>
+                  <Input
+                    type="text"
+                    name="title"
+                    value={input.title}
+                    onChange={changeEventHandler}
+                    className="w-full"
+                    placeholder="e.g. Senior Software Engineer"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Description</Label>
+                  <Input
+                    type="text"
+                    name="description"
+                    value={input.description}
+                    onChange={changeEventHandler}
+                    className="w-full"
+                    placeholder="Brief job description"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Salary</Label>
+                  <Input
+                    type="number"
+                    name="salary"
+                    value={input.salary}
+                    onChange={changeEventHandler}
+                    className="w-full"
+                    placeholder="Annual salary"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Location</Label>
+                  <Input
+                    type="text"
+                    name="location"
+                    value={input.location}
+                    onChange={changeEventHandler}
+                    className="w-full"
+                    placeholder="Job location"
+                  />
+                </div>
+              </div>
+
+              {/* Additional Details */}
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Job Type</Label>
+                  <Select onValueChange={jobTypeSelectChangeHandler}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select job type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {jobType.map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Experience Level</Label>
+                  <Input
+                    type="text"
+                    name="experience"
+                    value={input.experience}
+                    onChange={changeEventHandler}
+                    className="w-full"
+                    placeholder="Required experience"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Number of Positions</Label>
+                  <Input
+                    type="number"
+                    name="position"
+                    value={input.position}
+                    onChange={changeEventHandler}
+                    className="w-full"
+                    placeholder="Available positions"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium">Technical Requirements</Label>
+                  <Multiselect
+                    options={techOptions}
+                    displayValue="name"
+                    selectedValues={input.requirements.map((req) => ({
+                      name: req,
+                      id: techOptions.find((option) => option.name === req)?.id,
+                    }))}
+                    avoidHighlightFirstOption={true}
+                    showArrow={true}
+                    onSelect={onSelect}
+                    onRemove={onRemove}
+                    style={{
+                      chips: {
+                        background: "#2563eb",
+                      },
+                      searchBox: {
+                        border: "1px solid #e2e8f0",
+                        borderRadius: "0.375rem",
+                        padding: "0.5rem",
+                      },
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Company Selection */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">Select Company</Label>
+              {companies.length !== 0 ? (
+                <Select onValueChange={selectChangeHandler}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Choose a company" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {companies.map((company) => (
+                        <SelectItem key={company._id} value={company._id}>
+                          {company.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              ) : (
+                <p className="text-sm text-red-600 font-medium">
+                  Please register a company before posting a job
+                </p>
+              )}
+            </div>
+
+            {/* Submit Button */}
+            <Button
+              className="w-full"
+              type="submit"
+              disabled={companies.length === 0 || load}
+            >
+              {load ? (
+                <span className="flex items-center gap-2">
+                  <span className="animate-spin">⌛</span> 
+                  Posting...
+                </span>
+              ) : (
+                "Post Job"
+              )}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 };
