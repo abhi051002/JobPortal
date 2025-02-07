@@ -33,7 +33,7 @@ const postJob = async (req, res) => {
     const job = await jobModel.create({
       title,
       description,
-      requirements: requirements.split(","),
+      requirements: requirements,
       salary: Number(salary),
       location,
       jobType,

@@ -19,6 +19,7 @@ app.use(
       "http://localhost:5173",
       "http://localhost:5174",
       "https://job-portal-frontend-ochre-delta.vercel.app",
+      "https://job-portal-frontend-git-development-abhi051002s-projects.vercel.app",
     ], // Your frontend URL
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],

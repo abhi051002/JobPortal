@@ -10,7 +10,7 @@ import {
 const jobRouter = express.Router();
 
 jobRouter.post("/post", authUser, postJob);
-jobRouter.get("/get", authUser, getAllJob);
+jobRouter.get("/get", getAllJob);
 jobRouter.post("/getadminjobs", authUser, getAdminJobs);
 jobRouter.get("/get/:id", authUser, getJobById);
 

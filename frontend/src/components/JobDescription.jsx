@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from "@/constant";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import { CircleCheckBig } from "lucide-react";
 const JobDescription = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
   const { singleJob } = useSelector((store) => store.job);
   const jobId = params.id;
@@ -43,21 +44,20 @@ const JobDescription = () => {
     };
     fetchSingleJob();
   }, [jobId, dispatch, user?._id]);
+
   const dateFormatter = (date) => {
     const adjustedDate = new Date(date);
-
     const day = String(adjustedDate.getDate()).padStart(2, "0");
     const month = String(adjustedDate.getMonth() + 1).padStart(2, "0");
     const year = adjustedDate.getFullYear();
-
-    const formattedDate = `${day}-${month}-${year}`;
-    return formattedDate;
+    return `${day}-${month}-${year}`;
   };
 
   const applyJob = async () => {
     try {
       if (!user) {
         toast.error("Please login to apply for a job");
+        navigate("/login");
         return;
       }
       const response = await axios.get(
@@ -80,97 +80,69 @@ const JobDescription = () => {
       toast.error(error.message);
     }
   };
+
   return (
-    <div className="mx-auto my-10 max-w-7xl">
-      <div className="flex items-center justify-between">
-        <div>
+    <div className="px-4 mx-auto my-10 max-w-7xl sm:px-6 lg:px-8">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-4">
           <h1 className="text-xl font-bold">{singleJob.title}</h1>
-          <div className="flex items-center gap-2 mt-4">
-            <Badge className={"text-blue-700 font-bold"} variant="ghost">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge className="font-bold text-blue-700" variant="ghost">
               {singleJob.position} Positions
             </Badge>
-            <Badge className={"text-[#F83B02] font-bold"} variant="ghost">
+            <Badge className="text-[#F83B02] font-bold" variant="ghost">
               {singleJob.jobType}
             </Badge>
-            <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
+            <Badge className="text-[#7209b7] font-bold" variant="ghost">
               {singleJob.salary} LPA
             </Badge>
           </div>
         </div>
         <Button
           disabled={isApplied}
-          className={`rounded-lg ${
+          className={`rounded-lg w-full sm:w-auto ${
             isApplied
               ? "bg-green-600 text-white cursor-not-allowed"
               : "bg-[#7209b7] hover:bg-[#5f32ad]"
           }`}
           onClick={isApplied ? null : applyJob}
         >
-          {isApplied ? <CircleCheckBig /> : <></>}
+          {isApplied ? <CircleCheckBig className="mr-2" /> : null}
           {isApplied ? "Already Applied!" : "Apply Now"}
         </Button>
       </div>
-      <h1 className="py-4 font-medium border-b-2 border-b-gray-300">
+
+      <h1 className="py-4 mt-8 font-medium border-b-2 border-b-gray-300">
         Job Description
       </h1>
-      <div className="my-4">
-        <h1 className="my-1 font-bold">
-          Role :{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob.title}
-          </span>
-        </h1>
-        <h1 className="my-1 font-bold">
-          Location :{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob.location}
-          </span>
-        </h1>
-        <h1 className="my-1 font-bold">
-          Location :{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob.location}
-          </span>
-        </h1>
-        
-        <h1 className="my-1 font-bold">
-        Requirements :
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob.requirements.join(", ")}
-          </span>
-        </h1>
-        <h1 className="my-1 font-bold">
-          Experience :{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob.experienceLevel}yr
-          </span>
-        </h1>
-        <h1 className="my-1 font-bold">
-          Salary :{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob.salary} LPA
-          </span>
-        </h1>
-        <h1 className="my-1 font-bold">
-          Total Applicants :{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.applications?.length === 0
-              ? 0
-              : singleJob?.applications?.length}
-          </span>
-        </h1>
-        <h1 className="my-1 font-bold">
-          Positions :{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.position}
-          </span>
-        </h1>
-        <h1 className="my-1 font-bold">
-          Posted Date :{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {dateFormatter(singleJob.createdAt)}
-          </span>
-        </h1>
+
+      <div className="my-4 space-y-3">
+        {[
+          { label: "Role", value: singleJob.title },
+          { label: "Location", value: singleJob.location },
+          { label: "Description", value: singleJob.description },
+          { label: "Experience", value: `${singleJob.experienceLevel}yr` },
+          { label: "Salary", value: `${singleJob.salary} LPA` },
+          {
+            label: "Total Applicants",
+            value:
+              singleJob?.applications?.length === 0
+                ? 0
+                : singleJob?.applications?.length,
+          },
+          { label: "Positions", value: singleJob?.position },
+          {
+            label: "Posted Date",
+            value: dateFormatter(singleJob.createdAt),
+          },
+        ].map(({ label, value }) => (
+          <div key={label} className="break-words">
+            <span className="font-bold">{label}: </span>
+            <span className="pl-0 font-normal text-gray-800 sm:pl-4">
+              {value}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -35,25 +35,24 @@ const CompaniesTable = () => {
       });
     setFilterCompanies(filteredCompany);
   }, [companies, searchCompanyByText]);
+
   const dateFormat = (date) => {
     const adjustedDate = new Date(date);
-
     const day = String(adjustedDate.getDate()).padStart(2, "0");
     const month = String(adjustedDate.getMonth() + 1).padStart(2, "0");
     const year = adjustedDate.getFullYear();
-
-    const formattedDate = `${day}-${month}-${year}`;
-    return formattedDate;
+    return `${day}-${month}-${year}`;
   };
+
   return (
-    <div>
+    <div className="overflow-x-auto">
       <Table>
         <TableCaption>A list of your registered companies</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Logo</TableHead>
+            <TableHead className="w-20">Logo</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Date</TableHead>
+            <TableHead className="sm:table-cell">Date</TableHead>
             <TableHead className="text-right">Action</TableHead>
           </TableRow>
         </TableHeader>
@@ -71,12 +70,14 @@ const CompaniesTable = () => {
                     />
                   </Avatar>
                 </TableCell>
-                <TableCell>{company?.name}</TableCell>
-                <TableCell>{dateFormat(company?.createdAt)}</TableCell>
-                <TableCell className="text-right cursor-pointer">
+                <TableCell className="font-medium">{company?.name}</TableCell>
+                <TableCell className="sm:table-cell">
+                  {dateFormat(company?.createdAt)}
+                </TableCell>
+                <TableCell className="text-right">
                   <Popover>
                     <PopoverTrigger>
-                      <MoreHorizontal />
+                      <MoreHorizontal className="ml-auto" />
                     </PopoverTrigger>
                     <PopoverContent className="w-32">
                       <div
@@ -92,8 +93,8 @@ const CompaniesTable = () => {
               </TableRow>
             ))
           ) : (
-            <TableRow className="text-center">
-              <TableCell colSpan="5" className="font-bold text-lg">
+            <TableRow>
+              <TableCell colSpan="4" className="text-center font-bold text-lg">
                 No Companies Registered yet.
               </TableCell>
             </TableRow>
