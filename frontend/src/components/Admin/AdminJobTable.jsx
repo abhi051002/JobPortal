@@ -45,28 +45,32 @@ const AdminJobTable = () => {
     return formattedDate;
   };
   return (
-    <div>
+    <div className="overflow-x-auto">
       <Table>
         <TableCaption>A list of your recent Posted Jobs</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Company Name</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead className="text-right">Action</TableHead>
+            <TableHead className="min-w-[120px]">Company Name</TableHead>
+            <TableHead className="min-w-[100px]">Role</TableHead>
+            <TableHead className="hidden sm:table-cell">Date</TableHead>
+            <TableHead className="text-right w-20">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {filterJobs.length > 0 ? (
             filterJobs?.map((job) => (
               <TableRow key={job._id}>
-                <TableCell>{job?.company?.name}</TableCell>
+                <TableCell className="font-medium">
+                  {job?.company?.name}
+                </TableCell>
                 <TableCell>{job?.title}</TableCell>
-                <TableCell>{dateFormat(job?.createdAt)}</TableCell>
-                <TableCell className="text-right cursor-pointer">
+                <TableCell className="hidden sm:table-cell">
+                  {dateFormat(job?.createdAt)}
+                </TableCell>
+                <TableCell className="text-right">
                   <Popover>
                     <PopoverTrigger>
-                      <MoreHorizontal />
+                      <MoreHorizontal className="ml-auto" />
                     </PopoverTrigger>
                     <PopoverContent className="w-32">
                       <div
@@ -91,8 +95,8 @@ const AdminJobTable = () => {
               </TableRow>
             ))
           ) : (
-            <TableRow className="text-center">
-              <TableCell colSpan="4" className="font-bold text-lg">
+            <TableRow>
+              <TableCell colSpan="4" className="text-center font-bold text-lg">
                 No Job Posted yet by you.
               </TableCell>
             </TableRow>

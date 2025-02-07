@@ -25,9 +25,11 @@ const CompanySetup = () => {
     location: "",
     file: null,
   });
+
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+
   const fileChangeEventHandler = (e) => {
     const file = e.target?.files?.[0];
     setInput({ ...input, file });
@@ -58,20 +60,18 @@ const CompanySetup = () => {
       );
       if (res.data.success) {
         toast.success(res.data.message);
-        // dispatch(singleCompany(res.data.company));
         navigate("/admin/companies");
       } else {
         toast.error(res.data.message);
       }
-      setLoading(false);
     } catch (error) {
       console.error(error);
-      setLoading(false);
       toast.error(error.message);
     } finally {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     if (singleCompany) {
       setInput({
@@ -83,71 +83,70 @@ const CompanySetup = () => {
       });
     }
   }, [singleCompany]);
+
   return (
-    <div className="max-w-xl mx-auto my-10">
-      <div className="flex items-center gap-5 p-8">
+    <div className="max-w-xl mx-auto my-5 sm:my-10 px-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-5 p-4 sm:p-8">
         <Button
           variant="outline"
           className="flex items-center gap-2 text-gray-500 font-semibold"
           onClick={() => navigate(`/admin/companies`)}
         >
-          <ArrowLeft />
+          <ArrowLeft className="w-4 h-4" />
           <span>Back</span>
         </Button>
-        <h1 className="font-bold text-xl">Company Setup</h1>
+        <h1 className="font-bold text-lg sm:text-xl">Company Setup</h1>
       </div>
-      <form onSubmit={submitHandler}>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
+      
+      <form onSubmit={submitHandler} className="space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-2">
             <Label>Company Name</Label>
             <Input
               type="text"
               name="name"
               value={input.name}
-              className="my-2"
               onChange={changeEventHandler}
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label>Description</Label>
             <Input
               type="text"
               name="description"
-              className="my-2"
               value={input.description}
               onChange={changeEventHandler}
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label>Location</Label>
             <Input
               type="text"
               name="location"
-              className="my-2"
               value={input.location}
               onChange={changeEventHandler}
             />
           </div>
-          <div>
+          <div className="space-y-2">
             <Label>Website</Label>
             <Input
               type="text"
               name="website"
-              className="my-2"
               value={input.website}
               onChange={changeEventHandler}
             />
           </div>
         </div>
-        <div>
+        
+        <div className="space-y-2">
           <Label>Logo</Label>
           <Input
             type="file"
-            accept="impage/*"
-            className="my-2"
+            accept="image/*"
             onChange={fileChangeEventHandler}
           />
         </div>
+        
         <Button type="submit" className="w-full mt-8">
           {loading ? "Please wait..." : "Update"}
         </Button>

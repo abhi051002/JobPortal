@@ -14,11 +14,12 @@ const CreateCompanies = () => {
   const token = localStorage.getItem("token");
   const [companyName, setCompanyName] = useState("");
   const dispatch = useDispatch();
+
   const registerCompany = async () => {
     try {
       if (!companyName) {
         toast.error("Company name is required");
-        return; // return early if company name is empty
+        return;
       }
       const res = await axios.post(
         `${COMPANY_API_ENDPOINT}/register`,
@@ -41,28 +42,42 @@ const CreateCompanies = () => {
       toast.error(error.message);
     }
   };
+
   return (
-    <div className="max-w-4xl mx-auto my-10">
-      <div className="my-10">
-        <h1 className="font-bold text-2xl">Your Company Name</h1>
-        <p className="text-gray-500">
-          What would you like to give your company Name ? you can change it
+    <div className="max-w-4xl mx-auto my-5 px-4 sm:my-10">
+      <div className="my-5 sm:my-10">
+        <h1 className="font-bold text-xl sm:text-2xl">Your Company Name</h1>
+        <p className="text-gray-500 text-sm sm:text-base mt-2">
+          What would you like to give your company Name? You can change it
           later.
         </p>
       </div>
-      <Label>Company Name</Label>
-      <Input
-        type="text"
-        value={companyName}
-        onChange={(e) => setCompanyName(e.target.value)}
-        className="my-2"
-        placeholder="Microsoft, Google, Facebook"
-      />
-      <div className="flex items-center gap-2 my-10">
-        <Button variant="outline" onClick={() => navigate("/admin/companies")}>
-          Cancel
-        </Button>
-        <Button onClick={registerCompany}>Continue</Button>
+      <div className="space-y-4">
+        <div>
+          <Label>Company Name</Label>
+          <Input
+            type="text"
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            className="mt-2"
+            placeholder="Microsoft, Google, Facebook"
+          />
+        </div>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-4">
+          <Button
+            variant="outline"
+            onClick={() => navigate("/admin/companies")}
+            className="w-full sm:w-auto order-2 sm:order-1"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={registerCompany}
+            className="w-full sm:w-auto order-1 sm:order-2"
+          >
+            Continue
+          </Button>
+        </div>
       </div>
     </div>
   );

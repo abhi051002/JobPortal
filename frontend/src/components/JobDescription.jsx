@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { APPLICATION_API_ENDPOINT, JOB_API_ENDPOINT } from "@/constant";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import { CircleCheckBig } from "lucide-react";
 const JobDescription = () => {
   const dispatch = useDispatch();
   const params = useParams();
+  const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
   const { singleJob } = useSelector((store) => store.job);
   const jobId = params.id;
@@ -54,6 +55,7 @@ const JobDescription = () => {
     try {
       if (!user) {
         toast.error("Please login to apply for a job");
+        navigate("/login");
         return;
       }
       const response = await axios.get(

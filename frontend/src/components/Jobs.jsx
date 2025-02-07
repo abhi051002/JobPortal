@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import FilterCard from "./job/FilterCard";
 import Job from "./job/Job";
 import { useDispatch, useSelector } from "react-redux";
-import useGetAllJobs from "@/hooks/useGetAllJobs";
 import { setSearchQuery } from "@/redux/jobSlice";
 import { motion } from "framer-motion";
 
 const Jobs = () => {
-  // useGetAllJobs();
   const { allJobs, searchQuery } = useSelector((store) => store.job);
   const [filterJobs, setFilterJobs] = useState(allJobs);
   const dispatch = useDispatch();

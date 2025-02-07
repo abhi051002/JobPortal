@@ -27,7 +27,7 @@ const AppliedJobTable = () => {
     <div className="overflow-x-auto">
       <Table className="w-full min-w-[600px]">
         <TableCaption>
-          {allAppliedJobs.length > 0 ? "A list of your applied Jobs" : ""}
+          {allAppliedJobs?.length > 0 ? "A list of your applied Jobs" : ""}
         </TableCaption>
         <TableHeader>
           <TableRow>
@@ -40,8 +40,8 @@ const AppliedJobTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {allAppliedJobs.length > 0 ? (
-            allAppliedJobs.map((job, index) => (
+          {allAppliedJobs?.length > 0 ? (
+            allAppliedJobs?.map((job, index) => (
               <TableRow key={job._id} className="text-sm">
                 <TableCell>{dateFormat(job.createdAt)}</TableCell>
                 <TableCell>{job?.job?.title}</TableCell>

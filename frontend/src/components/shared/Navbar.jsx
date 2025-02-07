@@ -78,7 +78,7 @@ function Navbar() {
   );
 
   return (
-    <div className="bg-white">
+    <div className="bg-white relative">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16 px-4 lg:px-0">
         <div>
           <Link to={"/"}>
@@ -109,7 +109,7 @@ function Navbar() {
             </Popover>
           )}
           <button
-            className="p-2"
+            className="p-2 relative z-50"
             onClick={toggleMobileMenu}
             aria-label="Toggle menu"
           >
@@ -185,7 +185,7 @@ function Navbar() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 p-4">
+          <div className="lg:hidden fixed top-16 left-0 right-0 bg-white border-b border-gray-200 p-4 z-40">
             <ul className="flex flex-col space-y-4">
               {user && user?.role === "recruiters" ? (
                 <>

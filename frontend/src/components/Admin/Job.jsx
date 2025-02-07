@@ -17,15 +17,15 @@ const Job = () => {
   }, [input]);
   const navigate = useNavigate();
   return (
-    <div className="max-w-6xl mx-auto my-10">
-      <div className="flex items-center justify-between my-5">
+    <div className="max-w-6xl mx-auto my-5 sm:my-10 px-4">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 my-5">
         <Input
-          className="w-fit"
+          className="w-full sm:w-fit"
           placeholder="Search by Company Name & Role"
           onChange={(e) => setInput(e.target.value)}
         />
-        <Button onClick={() => navigate("create")}>
-          <Plus />
+        <Button onClick={() => navigate("create")} className="w-full sm:w-auto">
+          <Plus className="mr-2" />
           Post New Job
         </Button>
       </div>

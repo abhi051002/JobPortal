@@ -18,7 +18,8 @@ import { useDispatch } from "react-redux";
 import { setUser } from "./redux/authSlice";
 import PostJob from "./components/Admin/PostJob";
 import Applicants from "./components/Admin/Applicants";
-import ProtectedRoute from "./components/Admin/ProtectedRoute";
+import AdminProtectedRoute from "./components/Admin/AdminProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -47,58 +48,86 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/description/:id" element={<JobDescription />} />
-        <Route path="/browse" element={<Browse />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/jobs"
+          element={
+            <ProtectedRoute>
+              <Jobs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/description/:id"
+          element={
+            <ProtectedRoute>
+              <JobDescription />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/browse"
+          element={
+            <ProtectedRoute>
+              <Browse />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Admin Routes */}
         <Route
           path="/admin/companies"
           element={
-            <ProtectedRoute>
+            <AdminProtectedRoute>
               <Companies />
-            </ProtectedRoute>
+            </AdminProtectedRoute>
           }
         />
         <Route
           path="/admin/companies/create"
           element={
-            <ProtectedRoute>
+            <AdminProtectedRoute>
               <CreateCompanies />
-            </ProtectedRoute>
+            </AdminProtectedRoute>
           }
         />
         <Route
           path="/admin/companies/:id"
           element={
-            <ProtectedRoute>
+            <AdminProtectedRoute>
               <CompanySetup />
-            </ProtectedRoute>
+            </AdminProtectedRoute>
           }
         />
         <Route
           path="/admin/jobs"
           element={
-            <ProtectedRoute>
+            <AdminProtectedRoute>
               <Job />
-            </ProtectedRoute>
+            </AdminProtectedRoute>
           }
         />
         <Route
           path="/admin/jobs/create"
           element={
-            <ProtectedRoute>
+            <AdminProtectedRoute>
               <PostJob />
-            </ProtectedRoute>
+            </AdminProtectedRoute>
           }
         />
         <Route
           path="/admin/jobs/:id/applicants"
           element={
-            <ProtectedRoute>
+            <AdminProtectedRoute>
               <Applicants />
-            </ProtectedRoute>
+            </AdminProtectedRoute>
           }
         />
       </Routes>
