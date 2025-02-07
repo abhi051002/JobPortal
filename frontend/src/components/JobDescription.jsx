@@ -32,7 +32,7 @@ const JobDescription = () => {
       if (res.data.success) {
         dispatch(setSingleJob(res.data.job));
         // console.log(res.data.job);
-        
+
         setIsApplied(
           res.data.job.applications.some(
             (application) => application.applicant === user?.id
@@ -96,6 +96,20 @@ const JobDescription = () => {
             <Badge className="text-[#7209b7] font-bold" variant="ghost">
               {singleJob.salary} LPA
             </Badge>
+            
+            {singleJob.requirements.map((requirement, index) => (
+              <Badge
+                key={index}
+                className="text-[#7209b7] font-bold"
+                variant="ghost"
+              >
+                {requirement}
+              </Badge>
+            ))}
+            {/*           
+            <Badge className="text-[#7209b7] font-bold" variant="ghost">
+              {singleJob.requirements.join(", ")}
+              </Badge> */}
           </div>
         </div>
         <Button
@@ -121,6 +135,7 @@ const JobDescription = () => {
           { label: "Role", value: singleJob.title },
           { label: "Location", value: singleJob.location },
           { label: "Description", value: singleJob.description },
+          { label: "Requirements", value: singleJob.requirements.join(", ") },
           { label: "Experience", value: `${singleJob.experienceLevel}yr` },
           { label: "Salary", value: `${singleJob.salary} LPA` },
           {

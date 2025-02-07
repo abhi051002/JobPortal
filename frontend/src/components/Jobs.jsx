@@ -26,14 +26,14 @@ const Jobs = () => {
     }
   }, [searchQuery, allJobs]);
   return (
-    <div className="max-w-7xl mx-auto mt-5 px-4 lg:px-0">
-      <div className="flex flex-col lg:flex-row gap-5">
+    <div className="px-4 mx-auto mt-5 max-w-7xl lg:px-0">
+      <div className="flex flex-col gap-5 lg:flex-row">
         <div className="w-full lg:w-[20%]">
           <FilterCard />
         </div>
         {filterJobs.length > 0 ? (
           <div className="flex-1 h-[88vh] overflow-y-auto pb-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {filterJobs.map((job) => (
                 <motion.div
                   initial={{ opacity: 0, x: 100 }}
@@ -48,12 +48,12 @@ const Jobs = () => {
             </div>
           </div>
         ) : (
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center p-8 rounded-lg bg-white shadow-lg">
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
+          <div className="flex items-center justify-center flex-1">
+            <div className="p-8 text-center bg-white rounded-lg shadow-lg">
+              <h2 className="mb-2 text-2xl font-bold text-gray-800 md:text-3xl">
                 No Jobs Found
               </h2>
-              <p className="text-gray-600 text-sm md:text-base">
+              <p className="text-sm text-gray-600 md:text-base">
                 Try adjusting your search criteria or clear filters
               </p>
             </div>
