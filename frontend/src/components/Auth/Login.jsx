@@ -106,18 +106,21 @@ const Login = () => {
           </div>
 
           <div className="flex flex-row justify-center sm:justify-between">
-            <RadioGroup className="flex flex-row items-center sm:items-center gap-2 sm:gap-4 my-3 sm:my-5">
+            <RadioGroup className="flex flex-row justify-center items-center gap-4 my-5">
               <div className="flex items-center space-x-2">
                 <Input
                   type="radio"
                   name="role"
                   id="student"
                   value="student"
-                  className="cursor-pointer"
+                  className="h-4 w-4 cursor-pointer accent-blue-600"
                   checked={input.role === "student"}
                   onChange={(e) => changeEventHandler(e)}
                 />
-                <Label htmlFor="student" className="text-sm sm:text-base">
+                <Label
+                  htmlFor="student"
+                  className="text-sm sm:text-base cursor-pointer"
+                >
                   Student
                 </Label>
               </div>
@@ -127,11 +130,14 @@ const Login = () => {
                   name="role"
                   id="recruiters"
                   value="recruiters"
+                  className="h-4 w-4 cursor-pointer accent-blue-600"
                   checked={input.role === "recruiters"}
                   onChange={(e) => changeEventHandler(e)}
-                  className="cursor-pointer"
                 />
-                <Label htmlFor="recruiters" className="text-sm sm:text-base">
+                <Label
+                  htmlFor="recruiters"
+                  className="text-sm sm:text-base cursor-pointer"
+                >
                   Recruiters
                 </Label>
               </div>
